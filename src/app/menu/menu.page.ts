@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AlertController, NavController } from '@ionic/angular';
 
 @Component({
   selector: 'app-menu',
@@ -7,9 +8,47 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MenuPage implements OnInit {
 
-  constructor() { }
+  indiceSeleccionado: number = 0;
+
+  paginas = [
+    {
+      titulo: 'Inicio',
+      url: '/menu/inicio',
+      icono: 'home'
+    }
+  ]
+
+  constructor(public alertController: AlertController,
+    public navCtrl: NavController) { }
 
   ngOnInit() {
+  }
+
+  cambiarIndiceSeleccionado(i){
+    this.indiceSeleccionado = i;
+  }
+
+  async salir(){
+    const alert = await this.alertController.create({
+      header: 'Salir',
+      message: '¿Seguro que quieres salir?',
+      buttons: [
+        {
+          text: 'No',
+          handler: () => {
+            
+          }
+        }, {
+          text: 'Si',
+          handler: () => {
+            localStorage.removeItem('ingresado');
+            this.navCtrl.navigateRoot('login');
+          }
+        }
+      ]
+    });
+
+    await alert.present();
   }
 
 }
