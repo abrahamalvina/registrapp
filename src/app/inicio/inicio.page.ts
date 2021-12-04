@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { AbstractType, Component, OnInit } from '@angular/core';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
 
 @Component({
@@ -7,7 +7,7 @@ import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
   styleUrls: ['./inicio.page.scss'],
 })
 export class InicioPage implements OnInit {
-
+   code: any;
   constructor(private barcodeScanner: BarcodeScanner) {
     
   }
@@ -17,7 +17,8 @@ export class InicioPage implements OnInit {
 
   leerQr() {
     this.barcodeScanner.scan().then(barcodeData => {
-      console.log('Barcode data', barcodeData.text);
+      this.code = barcodeData.text;
+      console.log('Barcode data', this.code);
      }).catch(err => {
          console.log('Error', err);
      });
